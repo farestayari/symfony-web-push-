@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    <div class="example-wrapper">
+        <div class="card">
+            <div class="card-header">
+                Envoyer vers touls les abonnées
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Veillez entrer votre message pour l'envoyer vers tous les abonnées </h5>
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-save" aria-hidden="true"></i>Envoyer
+                </button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

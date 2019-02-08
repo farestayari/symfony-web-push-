@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <div class="jumbotron">
+        <h1 class="display-3">Bienvenue!</h1>
+        <p class="lead">Pour recevoir des notification veuillez accpeter les notifications</p>
+        <hr class="my-4">
+        <p>pour recevoir des notification personalisé </p>
+        <p class="lead">
+            <button class="btn btn-primary btn-lg"  name="accept" id="accept">Cliquez ici </button>
+        </p>
+    </div>
+</div>
+{% endblock %}
