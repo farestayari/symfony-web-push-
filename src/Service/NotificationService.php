@@ -8,6 +8,7 @@
 
 namespace App\Service;
 
+use App\Entity\Message;
 use App\Entity\Notification;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -68,14 +69,11 @@ class NotificationService
     }
 
 
-    function sendToUser($id){
+    function sendToUser(User $user,Message $notification){
 
-        $user = $this->em->getRepository(User::class)->find($id);
 
         $playerId = $user->getPlayerId();
-
-
-
+        $body = $notification->getBody();
         $config = new Config();
         $config->setApplicationId('94bf959a-efb0-4b90-b2d4-bdd0acc67333');
         $config->setApplicationAuthKey('MGVjYTA4YTctMWE0YS00YzIwLTg0ZTAtNTY1MTIwZGNmZDZm');
@@ -84,7 +82,6 @@ class NotificationService
         $guzzle = new GuzzleClient([ // http://docs.guzzlephp.org/en/stable/quickstart.html
             // ..config
         ]);
-
         $client = new HttpClient(new GuzzleAdapter($guzzle), new GuzzleMessageFactory());
         $api = new OneSignal($config, $client);
 
@@ -93,7 +90,7 @@ class NotificationService
             'contents' => [
                 'en' => $body
             ],
-            'included_segments' => ['All'],
+            'include_player_ids' => [$playerId],
             'data' => ['foo' => 'bar'],
 //            'isChrome' => true,
             'send_after' => new \DateTime('1 second'),

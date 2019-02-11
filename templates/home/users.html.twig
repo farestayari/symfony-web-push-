@@ -23,13 +23,13 @@
                             {%   for user in users %}
                             <tr>
                                 <td>{{ user.email }}</td>
-                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Envoyer</button></td>
+                                <td><a data-toggle="modal" data-id="{{ user.id }}" title="envoyer" class="open-AddBookDialog btn btn-primary" href="#addBookDialog">Envoyer</a></td>
                             </tr>
                             {% endfor %}
                             </tbody>
                         </table>
-
-                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        {% for user in users %}
+                        <div class="modal hide" id="addBookDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -38,16 +38,18 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
+                                    <form action=""></form>
                                     <div class="modal-body">
-                                        ...
+                                    {{ form(form) }}
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        <button type="submit" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {% endfor  %}
                     </div>
                 </div>
             </div>
@@ -55,5 +57,15 @@
 
     </div>
 </div>
+
+    <script>
+        $(document).on("click", ".open-AddBookDialog", function () {
+            var myBookId = $(this).data('id');
+             var test =  $(".modal-body #form_user_id").val( myBookId );
+        });
+
+
+
+    </script>
 {% endblock %}
 

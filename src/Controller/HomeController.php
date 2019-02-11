@@ -2,11 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Message;
 use App\Entity\Notification;
 use App\Entity\User;
+use App\Form\MessageType;
 use App\Form\NotificationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,12 +78,48 @@ class HomeController extends AbstractController
      * @Route("/users" , name="users")
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listUsers()
+    public function listUsers(Request $request, EntityManagerInterface $em , NotificationService $notificationService)
     {
+        $user = new User();
+//        $message = new Message();
+        $notification = new Message();
+        $message = ['message' => 'this is a message'];
+        $form = $this->createFormBuilder($message, [])
+            ->add('message', TextType::class)
+            ->add('user_id' , HiddenType::class)
+            ->add('save', SubmitType::class, ['label' => 'Create Task'])
+            ->getForm();
+
+//        $form = $this->createForm(MessageType::class , $message , array(
+//            'user_id'=> $user->getId(),
+//        ));
+
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+//            $data = $form->getData();
+//
+            $data =  $request->request->get('form');
+            $userId = $data['user_id'];
+            $message = $data['message'];
+            $notification->setBody($message);
+            $notification->setUserId($userId);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($notification);
+            $em->flush();
+            $user = $em->getRepository(User::class)->find($userId);
+            $playerId = $user->getPlayerId();
+            $notificationService->sendToUser($user , $notification);
+        }
+
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         return $this->render('home/users.html.twig',[
-            'users'=>$users
+            'users'=>$users,
+            'form' =>$form->createView()
         ]);
+
     }
 
     /**

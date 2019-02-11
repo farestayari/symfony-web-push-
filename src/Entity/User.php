@@ -134,4 +134,11 @@ class User implements UserInterface
     {
         $this->playerId = $playerId;
     }
+
+    public function __toString(){
+        // to show the name of the Category in the select
+        return $this->getEmail();
+        // to show the id of the Category in the select
+        // return $this->id;
+    }
 }
