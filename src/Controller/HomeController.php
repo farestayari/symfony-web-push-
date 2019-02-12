@@ -26,7 +26,7 @@ class HomeController extends AbstractController
      */
     public function index(NotificationService $notification)
     {
-       $notification->sendMessage();
+//       $notification->sendMessage();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
         ]);
@@ -80,27 +80,19 @@ class HomeController extends AbstractController
      */
     public function listUsers(Request $request, EntityManagerInterface $em , NotificationService $notificationService)
     {
-        $user = new User();
-//        $message = new Message();
         $notification = new Message();
         $message = ['message' => 'this is a message'];
         $form = $this->createFormBuilder($message, [])
             ->add('message', TextType::class)
             ->add('user_id' , HiddenType::class)
-            ->add('save', SubmitType::class, ['label' => 'Create Task'])
+            ->add('save', SubmitType::class, [
+                'label' => 'Envoyer',
+            ])
             ->getForm();
-
-//        $form = $this->createForm(MessageType::class , $message , array(
-//            'user_id'=> $user->getId(),
-//        ));
-
-
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            $data = $form->getData();
-//
             $data =  $request->request->get('form');
             $userId = $data['user_id'];
             $message = $data['message'];
@@ -123,15 +115,10 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/unicast/{id}" , name="unicast")
+     * @Route("/admin" , name="admin")
      */
-    public function sendUnicast($id , Request $request , EntityManagerInterface $em)
+    public function showAdmin()
     {
-        $user = $em->getRepository(User::class)->find($id);
-
-        $playerId = $user->getPlayerId();
-
-
-
+        return $this->render('home/admin.html.twig');
     }
 }

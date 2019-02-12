@@ -59,6 +59,9 @@ class NotificationService
             'contents' => [
                 'en' => $body
             ],
+            'isChromeWeb'=> true,
+            'isFirefox'=>true,
+            'isSafari'=> true,
             'included_segments' => ['All'],
             'data' => ['foo' => 'bar'],
 //            'isChrome' => true,
@@ -90,6 +93,9 @@ class NotificationService
             'contents' => [
                 'en' => $body
             ],
+            'isChromeWeb'=> true,
+            'isFirefox'=>true,
+            'isSafari'=> true,
             'include_player_ids' => [$playerId],
             'data' => ['foo' => 'bar'],
 //            'isChrome' => true,

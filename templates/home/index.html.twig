@@ -13,9 +13,20 @@
         <h1 class="display-3">Bienvenue!</h1>
         <p class="lead">Pour recevoir des notification veuillez accpeter les notifications</p>
         <hr class="my-4">
+        {% if app.user %}
         <p>pour recevoir des notification personalisé </p>
         <p class="lead">
             <button class="btn btn-primary btn-lg"  name="accept" id="accept">Cliquez ici </button>
+        </p>
+        {% else %}
+        <p> Si tu veux recevoir des notifications personalisé il faut s'inscrire  </p>
+        <p class="lead">
+            <a href="{{ path('app_register') }}" class="btn btn-primary btn-lg"  name="accept">S'inscrire </a>
+        </p>
+        {% endif %}
+        <p> Si tu veux envoyer des notifications  </p>
+        <p class="lead">
+            <a href="{{ path('admin') }}" class="btn btn-primary btn-lg"  name="accept">Démarrer </a>
         </p>
     </div>
 </div>

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+
+    <div class="example-wrapper">
+    <div class="jumbotron">
+        <h1 class="display-4">Admin</h1>
+        <p class="lead"></p>
+        <hr class="my-4">
+        <p>Choisissez le type de notificaiton</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{{ path('send') }}" role="button">Envoyer vers tous</a>
+            <a class="btn btn-primary btn-lg" href="{{ path('users') }}" role="button">Envoyer vers un utilisateur</a>
+        </p>
+    </div>
+</div>
+
+{% endblock %}
