@@ -14,7 +14,12 @@ class NotificationType extends AbstractType
     {
         $builder
             ->add('body', TextType::class, [
-                'required' => false,
+                'required' => true,
+                'attr' => [
+                    'class' => 'form-control'
+                ],
+                'label' => 'Votre message :',
+
             ])
         ;
     }

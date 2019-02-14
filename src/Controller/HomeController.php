@@ -81,12 +81,20 @@ class HomeController extends AbstractController
     public function listUsers(Request $request, EntityManagerInterface $em , NotificationService $notificationService)
     {
         $notification = new Message();
-        $message = ['message' => 'this is a message'];
+        $message = ['message' => 'Votre message'];
         $form = $this->createFormBuilder($message, [])
-            ->add('message', TextType::class)
+            ->add('message', TextType::class,
+                [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
+                ])
             ->add('user_id' , HiddenType::class)
             ->add('save', SubmitType::class, [
                 'label' => 'Envoyer',
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
             ])
             ->getForm();
 
@@ -120,5 +128,14 @@ class HomeController extends AbstractController
     public function showAdmin()
     {
         return $this->render('home/admin.html.twig');
+    }
+
+
+    /**
+     * @Route("/logout" , name="app_logout")
+     */
+    public function logout()
+    {
+        return $this->redirectToRoute('home');
     }
 }
